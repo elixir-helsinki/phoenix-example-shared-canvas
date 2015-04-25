@@ -5,16 +5,56 @@ import {Socket, LongPoller} from "phoenix"
 class App {
 
   static init(){
-    console.log("I am alive!");
-    App.render();
+    let state = {
+      pixels: [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+     ],
+      width: 16,
+      height: 16
+    };
+    console.log("Alive!");
+    App.render(state);
   }
 
-  static render()
+  static render(state)
   {
     var ctx = document.getElementById("canvas").getContext("2d");
-    ctx.beginPath();
-    ctx.arc(95,50,40,0,2*Math.PI);
-    ctx.stroke();
+
+    var palette = ["#000000", "#9d9d9d", "#ffffff", "#be2633", "#e06f8b", "#493c2b", "#a46422", "#eb8931", "#f7e26b", "#2f484e", "#44891a", "#a3ce27", "#1b2632", "#005784", "#31a2f2", "#b2dcef"];
+
+    var boxw = canvas.width/state.width;
+    var boxh = canvas.height/state.height;
+
+    ctx.fillStyle = "#fffafa";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    var pixels = state.pixels;
+
+    for (var y = 0; y < state.height; y++) {
+      var row = pixels[y];
+      for (var x = 0; x < state.width; x++) {
+        var color = row[x];
+        if (color == 0) continue;
+        ctx.fillStyle = palette[color];
+        ctx.fillRect(x*boxw,y*boxh,boxw,boxh);
+      }
+    }
+    
   }
 
 }
