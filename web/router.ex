@@ -1,6 +1,10 @@
 defmodule Pichat.Router do
   use Phoenix.Router
 
+  socket "/ws", Chat do
+    channel "canvas:*", CanvasChannel
+  end
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
