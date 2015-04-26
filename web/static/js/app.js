@@ -86,16 +86,32 @@ class App {
           $messages.append(`<br/><i>[${username} entered]</i>`)
         })
 
-         // setup click handler
-        $canvas.click(function (e) {
-          let offset = $(this).offset();
+        var mouseDown = false
+
+        let setpixel = function(elem, e) {
+          let offset = elem.offset();
           let x = Math.floor((e.pageX - offset.left) / BOX_WIDTH)
           let y = Math.floor((e.pageY - offset.top) / BOX_HEIGHT)
 
           chan.push("new:pixel", {user: $username.val(), x: x, y: y, c: mycolor})
+        }
 
+        // setup click handler
+        $canvas.mousedown(function (e) {
+          setpixel($(this), e)
+          mouseDown = true
           return false
         })
+
+        $canvas.mouseup(function (e) {
+          mouseDown = false
+          return false
+        })
+
+        $canvas.mousemove(function (e) {
+          if (mouseDown) setpixel($(this), e)
+          return false
+        });
 
       })
       .after(10000, () => console.log("Connection interruption") )
