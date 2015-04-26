@@ -1,8 +1,7 @@
 # Pichat
 
-To start your new Phoenix application:
+This is an example application created for a Helsinki Elixir Meetup.
 
-1. Install dependencies with `mix deps.get`
-2. Start Phoenix endpoint with `mix phoenix.server`
+Most of the code is based on an example chat application by Chris McCord.
 
-Now you can visit `localhost:4000` from your browser.
+You can find that here: https://github.com/chrismccord/phoenix_chat_example 
