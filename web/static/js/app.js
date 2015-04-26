@@ -39,6 +39,7 @@ class App {
     let $username  = $("#username")
     let $input     = $("#message-input")
 
+
     let socket = new Socket("ws://" + location.host +  "/ws")
     socket.connect()
 
@@ -58,6 +59,14 @@ class App {
           }
         })
 
+        chan.on("join", msg => {
+          this.render(msg.state)
+        } )
+
+        chan.on("new:state", msg => {
+          this.render(msg.state)
+        })
+
         chan.on("new:msg", msg => {
           $messages.append(this.messageTemplate(msg))
           scrollTo(0, document.body.scrollHeight)
@@ -73,8 +82,10 @@ class App {
           let offset = $(this).offset();
           let x = Math.round((e.pageX - offset.left) / BOX_WIDTH)
           let y = Math.round((e.pageY - offset.top) / BOX_HEIGHT)
+
+          e.preventDefault();
           
-          chan.push("new:pixel", {user: $username.val(), x: x, y: y})
+          chan.push("new:pixel", {user: $username.val(), x: x, y: y, c: Math.round(16 * Math.random())})
         });
 
 
