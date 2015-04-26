@@ -6,6 +6,8 @@ Most of the code is based on an example chat application by Chris McCord.
 
 You can find that here: https://github.com/chrismccord/phoenix_chat_example 
 
+This application is running at https://phoenix-example-shared-canvas.herokuapp.com/
+
 # Running the application
 
 1. Clone the repo and `cd` in to the folder
