@@ -1,8 +1,15 @@
 <div class="jumbotron">
   <h2>Drrrraw!</h2>
-  <canvas id="canvas" width="512" height="512" style="border:1px solid #000000;"></canvas>
+  <canvas id="canvas"
+          width="512"
+          height="512"
+          style="border:1px solid #000000;"
+          unselectable='on'
+          onselectstart='return false;'
+          onmousedown='return false;'>
+  </canvas>
 </div>
-<div id="messages" class="container">
+<div id="messages" class="container" style="overflow: auto; height: 200px;">
 </div>
 <div id="footer">
   <div class="container">

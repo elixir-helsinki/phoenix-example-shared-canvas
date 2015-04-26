@@ -35,10 +35,10 @@ class App {
 
     // start our socket code
 
-    let $messages = $("#messages")
+    let $messages  = $("#messages")
     let $username  = $("#username")
     let $input     = $("#message-input")
-
+    let $canvas    = $("#canvas")
 
     let socket = new Socket("ws://" + location.host +  "/ws")
     socket.connect()
@@ -69,7 +69,7 @@ class App {
 
         chan.on("new:msg", msg => {
           $messages.append(this.messageTemplate(msg))
-          scrollTo(0, document.body.scrollHeight)
+          $messages.scrollTop($messages.height())
         })
 
         chan.on("user:entered", msg => {
@@ -78,16 +78,15 @@ class App {
         })
 
          // setup click handler
-        $("#canvas").click(function (e) {
+        $canvas.click(function (e) {
           let offset = $(this).offset();
-          let x = Math.round((e.pageX - offset.left) / BOX_WIDTH)
-          let y = Math.round((e.pageY - offset.top) / BOX_HEIGHT)
+          let x = Math.floor((e.pageX - offset.left) / BOX_WIDTH)
+          let y = Math.floor((e.pageY - offset.top) / BOX_HEIGHT)
 
-          e.preventDefault();
-          
-          chan.push("new:pixel", {user: $username.val(), x: x, y: y, c: Math.round(16 * Math.random())})
-        });
+          chan.push("new:pixel", {user: $username.val(), x: x, y: y, c: Math.round(15 * Math.random())})
 
+          return false
+        })
 
       })
       .after(10000, () => console.log("Connection interruption") )
