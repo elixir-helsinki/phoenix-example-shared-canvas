@@ -9,6 +9,8 @@ defmodule Pichat do
     children = [
       # Start the endpoint when the application starts
       supervisor(Pichat.Endpoint, []),
+
+      worker(Pichat.SharedCanvas, [[name: Pichat.SharedCanvas]])
       # Here you could define other workers and supervisors as children
       # worker(Pichat.Worker, [arg1, arg2, arg3]),
     ]
