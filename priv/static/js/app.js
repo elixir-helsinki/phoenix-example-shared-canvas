@@ -908,7 +908,8 @@ var App = (function () {
           $username.val(names[mycolor]);
         }
 
-        var socket = new Socket("ws://" + location.host + "/ws");
+        var proto = location.protocol == "https:" ? "wss:" : "ws:";
+        var socket = new Socket(proto + "//" + location.host + "/ws");
         socket.connect();
 
         socket.onClose(function (e) {

@@ -49,7 +49,7 @@ class App {
       $username.val(names[mycolor])
     }
 
-    let proto = location.protocol == "https:" ? "wss" : "ws"
+    let proto = location.protocol == "https:" ? "wss:" : "ws:"
     let socket = new Socket(proto + "//" + location.host +  "/ws")
     socket.connect()
 
