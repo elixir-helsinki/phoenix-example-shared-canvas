@@ -49,7 +49,8 @@ class App {
       $username.val(names[mycolor])
     }
 
-    let socket = new Socket("ws://" + location.host +  "/ws")
+    let proto = location.protocol == "https:" ? "wss" : "ws"
+    let socket = new Socket(proto + "//" + location.host +  "/ws")
     socket.connect()
 
     socket.onClose( e => console.log("CLOSE", e) )
