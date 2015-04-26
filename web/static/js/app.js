@@ -11,6 +11,9 @@ let BOX_HEIGHT = 512/HEIGHT;
 class App {
 
   static init(){
+
+    let names = ["void", "ash", "blind", "bloodred", "pigmeat", "oldpoop", "newpoop", "blaze", "zornskin", "shadegreen", "leafgreen", "slimegreen", "nightblue", "seablue", "skyblue", "cloudblue"]
+
     // This would come from the server
     let state = {
       pixels: [
@@ -40,12 +43,18 @@ class App {
     let $input     = $("#message-input")
     let $canvas    = $("#canvas")
 
+    let mycolor = Math.round(15 * Math.random())
+
+    if ($username.val() == '') {
+      $username.val(names[mycolor])
+    }
+
     let socket = new Socket("ws://" + location.host +  "/ws")
     socket.connect()
 
     socket.onClose( e => console.log("CLOSE", e) )
 
-    socket.join("canvas:lobby", {})
+    socket.join("canvas:lobby", {color: mycolor, user: $username.val()})
       .receive("ignore", () => console.log("auth error") )
       .receive("ok", chan => {
 
@@ -54,7 +63,7 @@ class App {
 
         $input.off("keypress").on("keypress", e => {
           if (e.keyCode == 13) {
-            chan.push("new:msg", {user: $username.val(), body: $input.val()})
+            chan.push("new:msg", {user: $username.val(), color: mycolor, body: $input.val()})
             $input.val("")
           }
         })
@@ -83,7 +92,7 @@ class App {
           let x = Math.floor((e.pageX - offset.left) / BOX_WIDTH)
           let y = Math.floor((e.pageY - offset.top) / BOX_HEIGHT)
 
-          chan.push("new:pixel", {user: $username.val(), x: x, y: y, c: Math.round(15 * Math.random())})
+          chan.push("new:pixel", {user: $username.val(), x: x, y: y, c: mycolor})
 
           return false
         })
